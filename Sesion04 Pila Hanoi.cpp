@@ -37,8 +37,7 @@ void mostrar(TpNodo lista){
 		cout<<"El nodo "<<n<<" ingresado es ---> "<<p->dato<<endl;
 		p=p->sgte;
 		n++;
-				}
-	
+				}	
 }
 
 void menu(){
@@ -134,10 +133,7 @@ int main( ) {
 			}
 
 		}//switch
-		
-		
-	
-		
+
 	}while(opc !=0);
 	
 	return 0;
