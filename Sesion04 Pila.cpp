@@ -45,7 +45,6 @@ void menu(){
  	
  }
  
- 
  //********************************
 int main( ) {
 	TpNodo t=NULL, lista=NULL, p=NULL, q=NULL;
@@ -64,8 +63,6 @@ int main( ) {
 				Pop(lista);
 				system("pause");
 				break;
-	
-			
 			}
 		
 			case 3:
@@ -83,10 +80,6 @@ int main( ) {
 			}
 
 		}//switch
-		
-		
-	
-		
 	}while(opc !=0);
 	
 	return 0;
