@@ -7,7 +7,7 @@ struct nodo{
 	struct nodo *sgte;
 };
  int nrnodos=0;
-typedef struct nodo *TpNodo;// Definiendo un tipo de dato tipo struct nodo
+typedef struct nodo *TpNodo;// Definiendo un tipo de dato tipo struct nodo 
 
 TpNodo CrearNodo(){
 		TpNodo nuevo = new(struct nodo);
@@ -31,8 +31,8 @@ void InsertarFinal(TpNodo &lista){
 	else{
 		while(p->sgte != NULL)
 			p=p->sgte;
-		p->sgte=q;
-	}
+		p->sgte=q;	
+	}   
 }
 
 void InsertarPosicion(TpNodo &lista, int pos){
@@ -43,7 +43,7 @@ void InsertarPosicion(TpNodo &lista, int pos){
 		InsertarInicio(lista);
 		return;
 	}
-
+	
 	q=CrearNodo();
 	while(p->sgte != NULL && x!= pos){
 		t=p;
@@ -54,7 +54,7 @@ void InsertarPosicion(TpNodo &lista, int pos){
 	}
 	if(flag ==true){
 			t->sgte = q;
-			q->sgte = p;
+			q->sgte = p;	
 		}
 	else{
 		cout<<"ERROR: Posicion "<<pos<< " ingresada No Existe "<<endl;
@@ -73,6 +73,8 @@ void menu(){
 	cout<<"6.- Eliminar ultimo Nodo "<<endl;
 	cout<<"7.- Eliminar por Posicion "<<endl;
 	cout<<"8.- Buscar y Reemplazar valores "<<endl;
+	cout<<"9.- Ordenamiento Burbuja "<<endl;	
+	
 	cout<<"\n0.- Salir"<<endl;
 	cout<<"\nIngresar Opcion ---> ";
 }
@@ -83,9 +85,9 @@ void menu(){
  	cout<<"\nNodo eliminado Nr. " <<t->dato<<endl<<endl;
  	delete(t);
  	system("pause");
-
+ 	
  }
-
+ 
  void EliminarFinal(TpNodo &lista){
  	TpNodo p=lista, t=NULL;
  	if(lista == NULL){
@@ -100,9 +102,9 @@ void menu(){
  		system("pause");
 	 	return;
 	 }
-
-
-
+	 
+	 
+	 
 	 while(p->sgte != NULL){
 	 	t=p;
 	 	p=p->sgte;
@@ -111,9 +113,8 @@ void menu(){
 	cout<<"\nNodo eliminado Nr. " <<p->dato<<endl<<endl;
  	delete(p);
  	system("pause");
-
+	 	
  }
-
  void EliminarPosicion(TpNodo &lista, int pos){
  	TpNodo p=lista, t=NULL;
  	int x=1;
@@ -122,7 +123,7 @@ void menu(){
 	 	EliminarInicio(lista);
 	 	return;
 	 }
-
+	 
  	while(p->sgte != NULL && x != pos){
  		t=p;
  		p=p->sgte;
@@ -140,28 +141,67 @@ void menu(){
  		cout<<"ERROR Posicion ingresada No Existe..."<<endl;
  		system("pause");
 	 }
-
+ 	
  }
-
   void BuscaReemplaza(TpNodo lista, int b, int r){
   	TpNodo p=lista;
   	bool flag = false;
   	while(p!=NULL){
   		if(p->dato ==b){
-  			p->dato=r;
+  			p->dato=r;	
   			flag=true;
 		  }
-
-  		p=p->sgte;
+  			
+  		p=p->sgte;	
 	  }
   	if(flag==false){
   		cout<<"Valor "<<b<< " no encontrado en la lista"<<endl;
   		system("pause");
 	  }
-
+  	
   }
-
-
+ 
+ //********************************
+ // ORDENAMIENTO METODO BURBUJA
+ 
+ void Burbuja(TpNodo &lista){
+ 	TpNodo p=lista;
+ 	int t=0, n=0;
+ 	bool flag=true;
+ 	
+ 	if(lista ==NULL){
+ 		cout<<"Lista Vacia...."<<endl;
+ 		system("pause");
+ 		return;
+ 	 }
+ 	
+ 	
+ 	// Contar los nodos de la lista
+     while(p != NULL){
+     		n++;
+     		p=p->sgte;
+	 } 
+	 
+	 for(int i=0; (i<n-1 && flag==true) ;i++ ){
+	 	p=lista;
+	 	flag=false;
+	 
+	  while(p->sgte != NULL){
+	  		cout<<"pasada" << i+1<<" compara "<<p->dato<<" con "<<p->sgte->dato<<endl;
+	  		if(p->dato > p->sgte->dato)	{
+	  			t=p->dato;
+	  			p->dato=p->sgte->dato;
+	  			p->sgte->dato=t;
+	  			flag=true;
+	  		 }//if
+	  		p=p->sgte;	
+	  }//while
+	 
+	 }// for
+	cout<<"Lista se ordeno exitosamente .... "<<endl;
+	system("pause");		 		
+ }
+ 
  //********************************
 int main( ) {
 	TpNodo t=NULL, lista=NULL, p=NULL, q=NULL;
@@ -180,8 +220,10 @@ int main( ) {
 				InsertarFinal(lista);
 				system("pause");
 				break;
+	
+			
 			}
-
+		
 			case 3:
 				{
 				if(lista ==NULL){
@@ -196,10 +238,14 @@ int main( ) {
 						cout<<"\nERROR: Solo permite valores mayores que cero"<<endl;
 						system("pause");
 					}
-				}
+							
+				}	
+				
+				
+			
 			break;
 			}
-
+		
 			case 4:
 			{
 				p=lista;
@@ -210,17 +256,17 @@ int main( ) {
 					n++;
 				}
 				system("pause");
-
+				
 				break;
 			}
 			case 5:
 				{
 				EliminarInicio(lista);
-				break;
+				break;	
 				}
 			case 6:
 				{
-				EliminarFinal(lista);
+				EliminarFinal(lista);	
 				break;
 				}
 			case 7:
@@ -232,11 +278,11 @@ int main( ) {
 				else{
 					cout<<"Insertar Posicion---> ";cin>>pos;
 					EliminarPosicion(lista, pos);
-
+					
 				}
-
+				
 				break;
-			}
+			}	
 			case 8:
 			{
 				if(lista==NULL){
@@ -253,15 +299,21 @@ int main( ) {
 						system("pause");
 					}
 				}
-
+				
 				break;
-			}
+			}	
+			
+			case 9:
+				{
+				Burbuja(lista);	
+				break;
+				}
 		}//switch
-
-
-
-
+		
+		
+	
+		
 	}while(opc !=0);
-
+	
 	return 0;
 }

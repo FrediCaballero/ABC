@@ -7,7 +7,7 @@ struct nodo{
 	struct nodo *sgte;
 };
  int nrnodos=0;
-typedef struct nodo *TpNodo;// Definiendo un tipo de dato tipo struct nodo
+typedef struct nodo *TpNodo;// Definiendo un tipo de dato tipo struct nodo 
 
 TpNodo CrearNodo(){
 		TpNodo nuevo = new(struct nodo);
@@ -18,21 +18,36 @@ TpNodo CrearNodo(){
 }
 
 void InsertarInicio(TpNodo &lista){
-	TpNodo  q = CrearNodo();
-	if(lista!=NULL)
+	TpNodo  q = CrearNodo(), p=lista;
+	if(lista==NULL){
+		lista=q;
 		q->sgte=lista;
-	lista=q;
+	}
+	else{
+		while(p->sgte!= lista)
+			p=p->sgte;
+		q->sgte=lista;
+		p->sgte=q;
+		lista=q;	
+	}
+	cout<<"\nIngresado al Inicio ---> "<<q->dato<<endl<<endl;
 }
 
 void InsertarFinal(TpNodo &lista){
 	TpNodo p=lista, q = CrearNodo();
-	if(lista==NULL)
-	   lista=q;
+	if(lista==NULL){
+		lista=q;	
+		q->sgte=lista;
+	}
+	   
+	   
 	else{
-		while(p->sgte != NULL)
+		while(p->sgte != lista)
 			p=p->sgte;
 		p->sgte=q;
-	}
+		q->sgte=lista;	
+	}   
+		cout<<"\nIngresado al Final ---> "<<q->dato<<endl<<endl;
 }
 
 void InsertarPosicion(TpNodo &lista, int pos){
@@ -43,7 +58,7 @@ void InsertarPosicion(TpNodo &lista, int pos){
 		InsertarInicio(lista);
 		return;
 	}
-
+	
 	q=CrearNodo();
 	while(p->sgte != NULL && x!= pos){
 		t=p;
@@ -54,7 +69,7 @@ void InsertarPosicion(TpNodo &lista, int pos){
 	}
 	if(flag ==true){
 			t->sgte = q;
-			q->sgte = p;
+			q->sgte = p;	
 		}
 	else{
 		cout<<"ERROR: Posicion "<<pos<< " ingresada No Existe "<<endl;
@@ -65,6 +80,7 @@ void InsertarPosicion(TpNodo &lista, int pos){
 void menu(){
 	system("cls");
 	cout<<endl;
+	cout<<"\nLISTA CIRCULAR SIMPLE"<<endl;
 	cout<<"1.- Insertar Nodo al Inicio "<<endl;
 	cout<<"2.- Insertar Nodo al Final "<<endl;
 	cout<<"3.- Insertar por Posicion "<<endl;
@@ -73,19 +89,35 @@ void menu(){
 	cout<<"6.- Eliminar ultimo Nodo "<<endl;
 	cout<<"7.- Eliminar por Posicion "<<endl;
 	cout<<"8.- Buscar y Reemplazar valores "<<endl;
+	
+	
 	cout<<"\n0.- Salir"<<endl;
 	cout<<"\nIngresar Opcion ---> ";
 }
  //********************************
  void EliminarInicio(TpNodo &lista){
- 	TpNodo t=lista;
- 	lista=lista->sgte;
- 	cout<<"\nNodo eliminado Nr. " <<t->dato<<endl<<endl;
+ 	TpNodo t=lista, p=lista;
+ 	if(lista==NULL){
+ 		cout<<"\nERROR: Lista Vacia, no permite esta opcion "<<endl;
+ 		system("pause");
+ 		return;
+ 	 }
+ 	 if(lista->sgte != lista){
+ 	 	
+ 	 	while(p->sgte != lista)
+ 	 		p=p->sgte;
+ 	 	p->sgte=lista->sgte;
+	 	lista=lista->sgte;	
+ 	  }
+ 	  else
+ 	  	lista=NULL;
+ 	 
+ 	 cout<<"\nNodo eliminado Nr. " <<t->dato<<endl<<endl;
  	delete(t);
  	system("pause");
-
+ 	
  }
-
+ 
  void EliminarFinal(TpNodo &lista){
  	TpNodo p=lista, t=NULL;
  	if(lista == NULL){
@@ -93,27 +125,24 @@ void menu(){
  		system("pause");
 		 return;
 	 }
-	 if(lista->sgte ==NULL){
-	 	lista=NULL;
+	 if(lista->sgte != lista){
+	 	while(p->sgte !=lista){
+	 		t=p;
+	 		p=p->sgte;
+		 }
+		 t->sgte=lista;
+		}	
+		else
+			lista=NULL;
+		
 		cout<<"\nNodo eliminado Nr "<<p->dato<<endl;
 		delete(p);
  		system("pause");
 	 	return;
 	 }
+	 
 
-
-
-	 while(p->sgte != NULL){
-	 	t=p;
-	 	p=p->sgte;
-	 }
-	t->sgte = NULL;
-	cout<<"\nNodo eliminado Nr. " <<p->dato<<endl<<endl;
- 	delete(p);
- 	system("pause");
-
- }
-
+ //*******************************************
  void EliminarPosicion(TpNodo &lista, int pos){
  	TpNodo p=lista, t=NULL;
  	int x=1;
@@ -122,7 +151,7 @@ void menu(){
 	 	EliminarInicio(lista);
 	 	return;
 	 }
-
+	 
  	while(p->sgte != NULL && x != pos){
  		t=p;
  		p=p->sgte;
@@ -140,28 +169,46 @@ void menu(){
  		cout<<"ERROR Posicion ingresada No Existe..."<<endl;
  		system("pause");
 	 }
-
+ 	
  }
-
   void BuscaReemplaza(TpNodo lista, int b, int r){
   	TpNodo p=lista;
   	bool flag = false;
-  	while(p!=NULL){
+  	while(p->sgte!=lista){
   		if(p->dato ==b){
-  			p->dato=r;
+  			p->dato=r;	
   			flag=true;
 		  }
-
-  		p=p->sgte;
+  			
+  		p=p->sgte;	
 	  }
+	  	if(p->dato ==b){
+  			p->dato=r;	
+  			flag=true;
+		  }
   	if(flag==false){
   		cout<<"Valor "<<b<< " no encontrado en la lista"<<endl;
   		system("pause");
 	  }
-
+  	
   }
-
-
+ 
+ void MostrarLista(TpNodo lista){
+ 	TpNodo p=lista;
+	int	n=1;
+	if(lista==NULL)
+		cout<<"\nLISTA VACIA....."<<endl;
+	else{
+		while(p->sgte!=lista){
+			cout<<"El nodo "<<n<<" ingresado es ---> "<<p->dato<<endl;
+			p=p->sgte;
+			n++;
+		}
+		cout<<"El nodo "<<n<<" ingresado es ---> "<<p->dato<<endl;
+		
+	}
+		
+ }
  //********************************
 int main( ) {
 	TpNodo t=NULL, lista=NULL, p=NULL, q=NULL;
@@ -180,8 +227,10 @@ int main( ) {
 				InsertarFinal(lista);
 				system("pause");
 				break;
+	
+			
 			}
-
+		
 			case 3:
 				{
 				if(lista ==NULL){
@@ -196,31 +245,29 @@ int main( ) {
 						cout<<"\nERROR: Solo permite valores mayores que cero"<<endl;
 						system("pause");
 					}
-				}
+							
+				}	
+				
+				
+			
 			break;
 			}
-
+		
 			case 4:
 			{
-				p=lista;
-				n=1;
-				while(p!=NULL){
-					cout<<"El nodo "<<n<<" ingresado es ---> "<<p->dato<<endl;
-					p=p->sgte;
-					n++;
-				}
+				MostrarLista(lista);
 				system("pause");
-
+				
 				break;
 			}
 			case 5:
 				{
 				EliminarInicio(lista);
-				break;
+				break;	
 				}
 			case 6:
 				{
-				EliminarFinal(lista);
+				EliminarFinal(lista);	
 				break;
 				}
 			case 7:
@@ -232,11 +279,11 @@ int main( ) {
 				else{
 					cout<<"Insertar Posicion---> ";cin>>pos;
 					EliminarPosicion(lista, pos);
-
+					
 				}
-
+				
 				break;
-			}
+			}	
 			case 8:
 			{
 				if(lista==NULL){
@@ -253,15 +300,15 @@ int main( ) {
 						system("pause");
 					}
 				}
-
+				
 				break;
-			}
+			}	
 		}//switch
-
-
-
-
+		
+		
+	
+		
 	}while(opc !=0);
-
+	
 	return 0;
 }
