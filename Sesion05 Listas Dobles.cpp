@@ -1,7 +1,7 @@
 #include <iostream>
 
 using namespace std;
-
+//para pruebas
 struct nodo{
 	int dato;
 	struct nodo *sgte;
@@ -39,7 +39,7 @@ void InsertarFinal(TpNodo &lista){
 		q->ant=p;	
 	}   
 }
-
+//eliminar dsp
 void InsertarPosicion(TpNodo &lista, int pos){
 	TpNodo p=lista, q=NULL;
 	int x=1;
@@ -81,8 +81,6 @@ void menu(){
 	cout<<"6.- Eliminar ultimo Nodo "<<endl;
 	cout<<"7.- Eliminar por Posicion "<<endl;
 	cout<<"8.- Buscar y Reemplazar valores "<<endl;
-	
-	
 	cout<<"\n0.- Salir"<<endl;
 	cout<<"\nIngresar Opcion ---> ";
 }
@@ -296,10 +294,6 @@ int main( ) {
 				break;
 			}	
 		}//switch
-		
-		
-	
-		
 	}while(opc !=0);
 	
 	return 0;
