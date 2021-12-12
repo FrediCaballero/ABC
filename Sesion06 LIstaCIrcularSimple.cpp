@@ -7,7 +7,7 @@ struct nodo{
 	struct nodo *sgte;
 };
  int nrnodos=0;
-typedef struct nodo *TpNodo;// Definiendo un tipo de dato tipo struct nodo 
+typedef struct nodo *TpNodo;
 
 TpNodo CrearNodo(){
 		TpNodo nuevo = new(struct nodo);
@@ -297,6 +297,7 @@ int main( ) {
 						BuscaReemplaza(lista, busca, reemp);
 					else{
 						cout<<"ERROR: Solo permite valores > cero "<<endl;
+						cout<<"imbecil!!"<<endl;
 						system("pause");
 					}
 				}
